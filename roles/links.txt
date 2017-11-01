@@ -1,0 +1,19 @@
+# Links to information used to set up the elements of 
+# syslog and logstash
+
+https://www.tecmint.com/setup-rsyslog-client-to-send-logs-to-rsyslog-server-in-centos-7/
+http://wiki.rsyslog.com/index.php/Configuration_Samples
+http://xmodulo.com/configure-rsyslog-client-centos.html
+https://docs.tenable.com/lce/4_8/Content/ReceiveEncrypted_Example.htm
+http://www.rsyslog.com/tag/tcp/
+https://stackoverflow.com/questions/2011768/log4net-syslog-appender-example
+https://www.cisco.com/c/en/us/support/docs/security/pix-500-series-security-appliances/63884-config-asa-00.html#anc6
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_MRG/1.3/html/Realtime_Tuning_Guide/sect-Realtime_Tuning_Guide-General_System_Tuning-syslog_tuning_tips.html
+https://www.digitalocean.com/community/tutorials/how-to-use-logstash-and-kibana-to-centralize-and-visualize-logs-on-ubuntu-14-04
+
+
+
+
+
+# Other logging info
+https://www.loggly.com/docs/python-syslog/
