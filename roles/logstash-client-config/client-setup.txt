@@ -1,0 +1,7 @@
+# Setting up Rsyslog client CentOS 7
+
+
+# Verify the rsyslog client is installed
+systemctl status rsyslog
+
+ 

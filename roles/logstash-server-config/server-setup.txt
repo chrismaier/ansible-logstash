@@ -1,0 +1,51 @@
+# Setting up Logstash Server
+
+
+# We need freaking java....
+# at least 1.8 
+# (2017-10-31 currently does not work with 1.9)
+yum install java
+rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+vim /etc/yum.repos.d/logstash.repo
+
+# add the following to the logstash.repo file
+[logstash-5.x]
+name=Elastic repository for 5.x packages
+baseurl=https://artifacts.elastic.co/packages/5.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+
+
+# Start the log stash server to verify it is installed properly
+systemctl start logstash.service
+
+
+# install logstash-patterns-core
+/usr/share/logstash/bin/logstash-plugin install logstash-patterns-core
+
+
+# Open firewall ports for logstash
+firewall-cmd --permanent --zone=public --add-port=5001/tcp
+
+# Open firewall management port for logstash if desired
+firewall-cmd --permanent --zone=public --add-port=9600/tcp
+
+# May need to set this if connections can't be made on the IPv4 interface
+# export _JAVA_OPTIONS="-Djava.net.preferIPv4Stack=true"
+
+# other IPv4 only option is to turn off IPv6
+# edit /etc/sysctl.conf
+# add::
+# net.ipv6.conf.all.disable_ipv6 = 1
+# net.ipv6.conf.default.disable_ipv6 = 1
+# net.ipv6.conf.lo.disable_ipv6 = 1
+#
+# Run:
+sysctl -p
+# And finally, restart services (or restart networking on the box)
+monit restart ingestor_syslog
+monit restart ingestor_cloudfoundry-firehose
