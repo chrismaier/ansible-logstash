@@ -11,6 +11,7 @@ https://www.cisco.com/c/en/us/support/docs/security/pix-500-series-security-appl
 https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_MRG/1.3/html/Realtime_Tuning_Guide/sect-Realtime_Tuning_Guide-General_System_Tuning-syslog_tuning_tips.html
 https://www.digitalocean.com/community/tutorials/how-to-use-logstash-and-kibana-to-centralize-and-visualize-logs-on-ubuntu-14-04
 
+https://github.com/logsearch/logsearch-boshrelease/issues/111
 
 
 
