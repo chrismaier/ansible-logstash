@@ -26,6 +26,8 @@ systemctl start logstash.service
 
 # install logstash-patterns-core
 /usr/share/logstash/bin/logstash-plugin install logstash-patterns-core
+/usr/share/logstash/bin/logstash-plugin install logstash-codec-line
+/usr/share/logstash/bin/logstash-plugin install logstash-codec-plain
 
 
 # Open firewall ports for logstash
