@@ -1,7 +1,49 @@
 # Setting up Rsyslog client CentOS 7
 
+### ********** WARNING ************
+# 
+# Not all rsyslog versions are created equal
+# Older CentOS [5,6] versions will not be able to read
+#  some of the parameters in the files 
+
+# Updating to a newer version of rsyslog on CentOS [5,6] can be a ROYAL PITA
+
+
+# Create a new rsyslog.repo file
+touch /etc/yum.repos.d/rsyslog.repo
+vim /etc/yum.repos.d/rsyslog.repo 
+
+# Add the following to the new repo file:
+[rsyslog_v8]
+name=Adiscon CentOS-$releasever - local packages for $basearch
+baseurl=http://rpms.adiscon.com/v8-stable/epel-$releasever/$basearch
+enabled=1
+gpgcheck=0
+gpgkey=http://rpms.adiscon.com/RPM-GPG-KEY-Adiscon
+protect=1
+
+# *** you should enable gpgcheck=1
+# you will be prompted to import a GPG key after you do this
+
+# Update to the latest version of rsyslog
+yum install rsyslog -y
+
+
 
 # Verify the rsyslog client is installed
 systemctl status rsyslog
+# or 
+service rsyslog status
 
- 
+# Pay attention to your $WorkDirectory parameter
+# Make sure that the following directory exists
+/var/spool/rsyslog
+
+
+
+# How to verify your rsyslog configuration:
+# Older versions of rsyslog
+# rsyslogd -c4 -N1 -f mysample.conf
+# rsyslogd -c4 -N1 -f /etc/rsyslog.conf 
+# newer version of rsyslog
+rsyslogd -dn -f /etc/rsyslog.conf 
