@@ -5,6 +5,7 @@ https://www.tecmint.com/setup-rsyslog-client-to-send-logs-to-rsyslog-server-in-c
 http://wiki.rsyslog.com/index.php/Configuration_Samples
 http://xmodulo.com/configure-rsyslog-client-centos.html
 https://docs.tenable.com/lce/4_8/Content/ReceiveEncrypted_Example.htm
+https://docs.tenable.com/lce/5_0/Content/ReceiveEncrypted_Example.htm
 http://www.rsyslog.com/tag/tcp/
 https://stackoverflow.com/questions/2011768/log4net-syslog-appender-example
 https://www.cisco.com/c/en/us/support/docs/security/pix-500-series-security-appliances/63884-config-asa-00.html#anc6
