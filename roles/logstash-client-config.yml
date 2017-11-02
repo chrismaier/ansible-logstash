@@ -1,0 +1,14 @@
+---
+- hosts: '{{ target_ip }}'
+
+  vars: 
+    short_host_name: '{{ host_name }}'
+    tld_name: '{{ host_tld }}'
+    rsyslog_ver: '{{ update_rsyslog_version }}'
+    log_target: '{{ log_collection_server }}'
+
+
+  become: true
+  roles:
+    - role: logstash-client-config 
+

@@ -1,0 +1,69 @@
+--- 
+
+    - name: Gather facts now...
+      setup:
+
+    # Yum Install programs & update...
+    # We do these individually so we can output individual status
+    #  and verify which items were needed or not
+
+#    - name: upgrade all packages
+#      yum: name=* state=latest
+#
+#
+#    - name: Install screen
+#      yum: name=screen state=latest
+#
+#
+#    - name: Install Z Shell
+#      yum: name=zsh state=latest
+
+    # UPDATE HERE - later versions of Ansible have a better authorized_keys module
+    # Add the ssh allow file
+#    - file:
+#        path: /home/{{ base_host_user }}/.ssh/
+#        owner: '{{ base_host_user }}'
+#        group: '{{ base_host_user }}'
+#        mode: 0700
+#        state: directory
+#    - raw: touch /home/{{ base_host_user }}/.ssh/authorized_keys
+#    - file: path=/home/{{ base_host_user }}/.ssh/authorized_keys owner=chris group=chris mode=0600
+#    - file: path=/home/mgmt/.ssh/ owner=mgmt group=mgmt mode=0700 state=directory
+#    - raw: touch /home/mgmt/.ssh/authorized_keys
+#    - file: path=/home/mgmt/.ssh/authorized_keys owner=mgmt group=mgmt mode=0600
+
+#    - copy: src=../configs/screen-config/base-screenrc dest=/etc/skel/.screenrc mode=644
+#    - copy: src=base-sudoers dest=/etc/sudoers validate='visudo -cf %s' backup=yes mode=440
+#    - copy: src=base-sshd_config dest=/etc/ssh/sshd_config backup=yes mode=600
+#    - copy: src=base-screenrc dest=/etc/skel/.screenrc mode=644
+
+
+    - name: Add Rsyslog RPM keys
+      rpm_key:
+        key: http://rpms.adiscon.com/RPM-GPG-KEY-Adiscon
+        state: present
+
+
+
+    - name: Add Rsyslog repository
+      yum_repository:
+        name: rsyslog-repository
+        description: Rsyslog Repository
+#        baseurl: http://yum.puppetlabs.com/el/{{ ansible_distribution_major_version }}/PC1/$basearch
+        baseurl: http://rpms.adiscon.com/v8-stable/epel-$releasever/$basearch
+        enabled: yes
+        gpgcheck: yes
+
+
+    - name: Install a more modern version of rsyslog 
+      yum:
+        name: rsyslog
+        state: latest
+
+
+#    - name: Configure the puppet server service
+#      service:
+#        name: puppetserver
+#        state: started
+#        enabled: yes
+
