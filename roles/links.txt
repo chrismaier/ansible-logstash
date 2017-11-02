@@ -14,8 +14,24 @@ https://www.digitalocean.com/community/tutorials/how-to-use-logstash-and-kibana-
 
 https://github.com/logsearch/logsearch-boshrelease/issues/111
 
+https://www.elastic.co/guide/en/logstash/current/working-with-plugins.html
+https://www.elastic.co/guide/en/logstash/current/plugins-inputs-tcp.html#plugins-inputs-tcp-ssl_cert
+https://www.elastic.co/guide/en/logstash/current/plugins-codecs-netflow.html
+
+https://www.elastic.co/guide/en/logstash/current/logstash-config-for-filebeat-modules.html
+
+http://www.rsyslog.com/doc/v8-stable/tutorials/tls_cert_client.html
+
+https://github.com/logstash-plugins/logstash-codec-collectd
+
 
 
 
 # Other logging info
 https://www.loggly.com/docs/python-syslog/
+
+
+
+
+# SaaS Logstash
+https://logz.io/logstash_nmlp/?utm_source=bing&utm_medium=cpc&utm_campaign=Logstash_phrase&utm_content=kw_logstash_phrase_NewHPnm&utm_term=logstash
