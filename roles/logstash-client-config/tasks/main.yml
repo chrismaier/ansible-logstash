@@ -44,7 +44,6 @@
         state: present
 
 
-
     - name: Add Rsyslog repository
       yum_repository:
         name: rsyslog-repository
@@ -61,9 +60,169 @@
         state: latest
 
 
-#    - name: Configure the puppet server service
-#      service:
-#        name: puppetserver
-#        state: started
-#        enabled: yes
+    - name: Stop the rsyslog service while we edit the configuration
+      service:
+        name: rsyslog
+        state: stopped
+
+
+    - name: Remove the default log format
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: absent
+       regexp: 'RSYSLOG_TraditionalFileFormat'
+
+
+    - name: Set the RFC5424 logging format as default
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$ActionFileDefaultTemplate RSYSLOG_SyslogProtocol23Format'
+
+
+    - name: 'Load the modules required: imfile'
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'MODULES'
+       regexp: 'imfile'
+       line: 'module(load="imfile" PollingInterval="10")'
+
+
+    - name: 'Load the modules required: imklog'
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'MODULES'
+       regexp: 'imklog'
+       line: 'module(load="imklog")'
+
+
+    - name: 'Load the modules required: imuxsock'
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'MODULES'
+       regexp: 'imuxsock'
+       line: 'module(load="imuxsock")'
+
+
+    - name: Set the repeated message reduction paraemter
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$RepeatedMsgReduction off'
+
+
+    - name: Ensure the working directory is present
+      file:
+        path: /var/spool/rsyslog
+        owner: 'root'
+        group: 'root'
+        mode: 0744
+        state: directory
+
+
+    - name: Set the working directory to queue logs in
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$WorkDirectory /var/spool/rsyslog'
+
+
+    - name: Set the retry count parameter
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$ActionResumeRetryCount -1'
+
+
+    - name: Set the log queue type
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$ActionQueueType LinkedList'
+
+
+    - name: Set the save log queue on shutdown parameter
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$ActionQueueSaveOnShutdown on'
+
+
+    - name: Set the save log queue disk size
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$ActionQueueMaxDiskSpace 500M'
+
+
+    - name: Setup the save log queue
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$ActionQueueFileName mainqueue'
+
+
+    - name: Set rsyslog debugging level
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$DebugLevel 2'
+
+
+    - name: Enable rsyslog debugging
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       insertafter: 'GLOBAL DIRECTIVES'
+       line: '$DebugFile /var/log/rsyslog-debug.log'
+
+
+    - name: Ship log files to logstash server
+      lineinfile:
+       path: /etc/rsyslog.conf
+       state: present
+       regexp: 'EOF'
+       line: '*.* @@logstash.drunkenidiot.org:5001'
+
+
+    - name: Start the rsyslog service with we the new configuration
+      service:
+        name: rsyslog
+        state: started
+        enabled: yes
+
+#    - name: Set NETWORK name parameter
+#     lineinfile:
+#       path: /etc/sysconfig/network
+#       state: present
+#       regexp: '(?i)^HOSTNAME'
+#       line: 'HOSTNAME={{ short_host_name }}.{{ host_tld }}'
+
+
+#   - name: Ensure the /etc/hostname file has the proper name in it
+#     lineinfile:
+#       path: /etc/hostname
+#       state: present
+#       regexp: '.'
+#       line: '{{ short_host_name }}.{{ host_tld }}'
+
+
+#   - name: Ensure the hosts IPv4 address is in /etc/hosts
+#     lineinfile:
+#       path: /etc/hosts
+#       state: present
+#       regexp: '{{ ansible_default_ipv4.address }}'
+#       line: '{{ ansible_default_ipv4.address }} {{ short_host_name }} {{ short_host_name }}.{{ host_tld }}'
 
